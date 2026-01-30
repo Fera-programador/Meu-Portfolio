@@ -60,14 +60,14 @@ export const Inicio = () => {
           className="flex flex-wrap items-center justify-center gap-4"
         >
           <a
-            href="#projects"
+            href="#projetos"
             className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-medium hover-lift inline-flex items-center gap-2"
           >
             Ver Projetos
             <ArrowDown className="h-4 w-4" />
           </a>
           <a
-            href="#contact"
+            href="#contato"
             className="px-8 py-4 rounded-xl gradient-border font-medium hover-lift"
           >
             Entre em Contato
