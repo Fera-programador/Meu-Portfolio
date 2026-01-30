@@ -1,4 +1,5 @@
 import { Code2, Palette, Rocket } from "lucide-react";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "./ScrollReveal";
 
 const highlights = [
   {
@@ -22,7 +23,7 @@ export const Sobre = () => {
   return (
     <section id="sobre" className="section-padding">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <ScrollReveal className="text-center mb-16">
           <span className="text-primary font-medium text-sm uppercase tracking-wider">
             Sobre Mim
           </span>
@@ -34,27 +35,25 @@ export const Sobre = () => {
             Estudando Frameworks de programação e Análise e Desenvolvimento de Sistemas.
             Sempre pronto para contribuir em equipe e aprender novas tecnologias.
           </p>
-        </div>
+        </ScrollReveal>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {highlights.map((item, index) => (
-            <div
-              key={item.title}
-              className="glass-card p-8 hover-lift group"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <item.icon className="h-7 w-7 text-primary" />
+        <StaggerContainer className="grid md:grid-cols-3 gap-6">
+          {highlights.map((item) => (
+            <StaggerItem key={item.title}>
+              <div className="glass-card p-8 hover-lift group h-full">
+                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <item.icon className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="font-display text-xl font-semibold mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-muted-foreground">
+                  {item.description}
+                </p>
               </div>
-              <h3 className="font-display text-xl font-semibold mb-3">
-                {item.title}
-              </h3>
-              <p className="text-muted-foreground">
-                {item.description}
-              </p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 
-export const inicio = () => {
+export const Inicio = () => {
   return (
     <section
       id="inicio"

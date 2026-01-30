@@ -1,4 +1,7 @@
-const Habilidade = [
+import { ScrollReveal, StaggerContainer, StaggerItem } from "./ScrollReveal";
+import { motion } from "framer-motion";
+
+const habilidades = [
   { name: "React", level: 95, color: "hsl(var(--primary))" },
   { name: "TypeScript", level: 90, color: "hsl(var(--primary))" },
   { name: "Node.js", level: 85, color: "hsl(var(--accent))" },
@@ -16,7 +19,7 @@ export const Habilidades = () => {
   return (
     <section id="habilidades" className="section-padding bg-secondary/30">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <ScrollReveal className="text-center mb-16">
           <span className="text-primary font-medium text-sm uppercase tracking-wider">
             Habilidades
           </span>
@@ -26,45 +29,52 @@ export const Habilidades = () => {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Sempre aprendendo e evoluindo com as tecnologias mais modernas do mercado.
           </p>
-        </div>
+        </ScrollReveal>
 
         <div className="grid md:grid-cols-2 gap-12 mb-16">
-          <div className="space-y-6">
-            {Habilidade.map((habilidade, index) => (
-              <div key={habilidade.name} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">{habilidade.name}</span>
-                  <span className="text-muted-foreground text-sm">{habilidade.level}%</span>
+          <ScrollReveal direction="left">
+            <div className="space-y-6">
+              {habilidades.map((habilidade, index) => (
+                <div key={habilidade.name} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">{habilidade.name}</span>
+                    <span className="text-muted-foreground text-sm">{habilidade.level}%</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-secondary overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${habilidade.level}%` }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 1,
+                        delay: index * 0.1,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="h-full rounded-full"
+                      style={{ background: habilidade.color }}
+                    />
+                  </div>
                 </div>
-                <div className="h-2 rounded-full bg-secondary overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all duration-1000 ease-out"
-                    style={{
-                      width: `${habilidade.level}%`,
-                      background: habilidade.color,
-                      animationDelay: `${index * 0.1}s`,
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="glass-card p-8">
-            <h3 className="font-display text-xl font-semibold mb-6">
-              Outras Tecnologias
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {tecnologias.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-4 py-2 rounded-lg bg-secondary/50 text-sm font-medium hover:bg-primary/20 hover:text-primary transition-colors cursor-default"
-                >
-                  {tech}
-                </span>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
+
+          <ScrollReveal direction="right">
+            <div className="glass-card p-8 h-full">
+              <h3 className="font-display text-xl font-semibold mb-6">
+                Outras Tecnologias
+              </h3>
+              <StaggerContainer className="flex flex-wrap gap-3">
+                {tecnologias.map((tech) => (
+                  <StaggerItem key={tech}>
+                    <span className="px-4 py-2 rounded-lg bg-secondary/50 text-sm font-medium hover:bg-primary/20 hover:text-primary transition-colors cursor-default">
+                      {tech}
+                    </span>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
