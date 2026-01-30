@@ -1,39 +1,33 @@
 import { Mail, MapPin, Phone, Send, Github, Linkedin, CheckCircle } from "lucide-react";
 import { useState } from "react";
-
+import { ScrollReveal } from "./ScrollReveal";
+import { motion } from "framer-motion";
 const contatoInfo = [
   { icon: Mail, label: "Email", value: "dsdouglas13@gmail.com" },
   { icon: Phone, label: "Telefone", value: "+55 (11) 91427-2665" },
   { icon: MapPin, label: "Localização", value: "São Paulo, Brasil" },
 ];
-
 const socials = [
   { icon: Github, label: "GitHub", href: "https://github.com/Fera-programador" },
   { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com" },
 ];
-
 export const Contato = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
-
   const [submitted, setSubmitted] = useState(false);
   const [senderName, setSenderName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const { name: Nome, email: Email, message: Mensagem } = formData;
-
     setError(null);
     setLoading(true);
     setSubmitted(false);
     setSenderName(formData.name);
-
     try {
       const response = await fetch(
         "https://backend-portfolio-gudw.onrender.com/api/mensagem",
@@ -43,13 +37,10 @@ export const Contato = () => {
           body: JSON.stringify({ Nome, Email, Mensagem }),
         }
       );
-
       const result = await response.json();
-
       if (!response.ok) {
         throw new Error(result.error || "Erro ao enviar a mensagem");
       }
-
       setSubmitted(true);
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {
@@ -60,11 +51,10 @@ export const Contato = () => {
       setLoading(false);
     }
   };
-
   return (
     <section id="contato" className="section-padding bg-secondary/30">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <ScrollReveal className="text-center mb-16">
           <span className="text-primary font-medium text-sm uppercase tracking-wider">
             Contato
           </span>
@@ -74,17 +64,23 @@ export const Contato = () => {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Tem um projeto em mente? Entre em contato e vamos transformar sua ideia em realidade.
           </p>
-        </div>
-
+        </ScrollReveal>
         <div className="grid lg:grid-cols-2 gap-12">
-          <div className="space-y-8">
+          <ScrollReveal direction="left" className="space-y-8">
             <div className="glass-card p-8">
               <h3 className="font-display text-xl font-semibold mb-6">
                 Informações de Contato
               </h3>
               <div className="space-y-6">
-                {contatoInfo.map((info) => (
-                  <div key={info.label} className="flex items-center gap-4">
+                {contatoInfo.map((info, index) => (
+                  <motion.div
+                    key={info.label}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    className="flex items-center gap-4"
+                  >
                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                       <info.icon className="h-5 w-5 text-primary" />
                     </div>
@@ -92,33 +88,36 @@ export const Contato = () => {
                       <p className="text-sm text-muted-foreground">{info.label}</p>
                       <p className="font-medium">{info.value}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
-
             <div className="glass-card p-8">
               <h3 className="font-display text-xl font-semibold mb-6">
                 Redes Sociais
               </h3>
               <div className="flex gap-4">
-                {socials.map((social) => (
-                  <a
+                {socials.map((social, index) => (
+                  <motion.a
                     key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all hover-lift"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1, duration: 0.4 }}
+                    whileHover={{ scale: 1.1 }}
+                    className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
                     aria-label={social.label}
                   >
                     <social.icon className="h-5 w-5" />
-                  </a>
+                  </motion.a>
                 ))}
               </div>
             </div>
-          </div>
-
-          <div className="space-y-6">
+          </ScrollReveal>
+          <ScrollReveal direction="right" className="space-y-6">
             {submitted && (
               <div className="glass-card border border-primary/30 bg-primary/10 p-6 rounded-xl animate-fade-in">
                 <div className="flex items-start gap-3">
@@ -140,13 +139,11 @@ export const Contato = () => {
                 </div>
               </div>
             )}
-
             {error && (
               <div className="glass-card border border-destructive/30 bg-destructive/10 p-4 rounded-xl text-sm text-destructive">
                 {error}
               </div>
             )}
-
             <form onSubmit={handleSubmit} className="glass-card p-8 space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -164,7 +161,6 @@ export const Contato = () => {
                   required
                 />
               </div>
-
               <div>
                 <label htmlFor="email" className="block text-sm font-medium mb-2">
                   Email
@@ -181,7 +177,6 @@ export const Contato = () => {
                   required
                 />
               </div>
-
               <div>
                 <label htmlFor="message" className="block text-sm font-medium mb-2">
                   Mensagem
@@ -198,7 +193,6 @@ export const Contato = () => {
                   required
                 />
               </div>
-
               <button
                 type="submit"
                 disabled={loading}
@@ -223,7 +217,7 @@ export const Contato = () => {
                 )}
               </button>
             </form>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
